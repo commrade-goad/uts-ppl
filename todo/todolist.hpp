@@ -20,7 +20,7 @@ struct Command {
     TodoState m_before;
     TodoState m_after;
 
-    Command();
+    Command() {};
     ~Command() = default;
 };
 
@@ -47,7 +47,7 @@ struct TodoList {
         return nullptr;
     }
 
-    void add_todo(Todo todo) {
+    uint16_t addTodo(Todo todo) {
         todo.setId(m_counter++);
 
         Command cmd = {};
@@ -59,9 +59,11 @@ struct TodoList {
         m_data.push_back(todo);
         m_undoStack.push_back(cmd);
         m_redoStack.clear();
+
+        return todo.getId();
     }
 
-    void del_todo(uint16_t id) {
+    void delTodo(uint16_t id) {
         int idx = -1;
         Todo* todo_ptr = findTodo(id, &idx);
 
@@ -78,7 +80,7 @@ struct TodoList {
         }
     }
 
-    void mark(uint16_t id) {
+    void markTodo(uint16_t id) {
         Todo* todo_ptr = findTodo(id);
 
         if (todo_ptr) {
@@ -97,7 +99,7 @@ struct TodoList {
         }
     }
 
-    void execute_command(const Command& cmd) {
+    void execCommand(const Command& cmd) {
         switch (cmd.m_type) {
             case CMD_ADD: {
                 Todo todo = cmd.m_after.m_todo;
@@ -121,7 +123,7 @@ struct TodoList {
         }
     }
 
-    void execute_inverse_command(const Command& cmd) {
+    void execInvCommand(const Command& cmd) {
         switch (cmd.m_type) {
             case CMD_ADD: {
                 int idx = -1;
@@ -149,7 +151,7 @@ struct TodoList {
 
         Command cmd = m_undoStack.back();
         m_undoStack.pop_back();
-        execute_inverse_command(cmd);
+        execInvCommand(cmd);
         m_redoStack.push_back(cmd);
     }
 
@@ -158,7 +160,7 @@ struct TodoList {
 
         Command cmd = m_redoStack.back();
         m_redoStack.pop_back();
-        execute_command(cmd);
+        execCommand(cmd);
         m_undoStack.push_back(cmd);
     }
 };

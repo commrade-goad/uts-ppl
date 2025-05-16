@@ -1,10 +1,10 @@
-all: calculator todo suhu
+all: calculator-exec todo-exec
 
 calculator: calc/main.cpp calc/calc.hpp
-	g++ calc/main.cpp -O2 -o calculator
+	g++ calc/main.cpp -ggdb -o calculator-exec
 
-todo: todo/todo.c
-	g++ todo/todo.cpp -O2 -o todo
+todo-exec: todo/main.cpp todo/todo.hpp todo/todolist.hpp
+	g++ todo/main.cpp -ggdb -o todo-exec
 
-suhu: suhu/suhu.c
-	g++ suhu/suhu.cpp -O2 -o suhu
+# suhu-exec: suhu/suhu.c
+# 	g++ suhu/suhu.cpp -O2 -o suhu

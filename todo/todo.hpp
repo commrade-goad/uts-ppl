@@ -13,8 +13,8 @@ struct Todo {
         m_body = body;
     }
 
-    Todo();
-    ~Todo();
+    Todo() {};
+    ~Todo() = default;
 
     void markAsDone() {
         m_checked = true;

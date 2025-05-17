@@ -1,6 +1,6 @@
-all: calculator-exec todo-exec
+all: calculator-exec todo-exec suhu-exec
 
-calculator: calc/main.cpp calc/calc.hpp
+calculator-exec: calc/main.cpp calc/calc.hpp
 	g++ calc/main.cpp -ggdb -o calculator-exec
 
 todo-exec: todo/main.cpp todo/todo.hpp todo/todolist.hpp

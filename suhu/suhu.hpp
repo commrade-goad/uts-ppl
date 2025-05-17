@@ -12,8 +12,8 @@ public:
     virtual ~Observer() = default;
 
     virtual void update(float temp) = 0;
-    virtual void print_status()     = 0;
-    virtual void print_statistic()  = 0;
+    virtual void printStatus()     = 0;
+    virtual void printStatistic()  = 0;
 };
 
 struct Display: public Observer {
@@ -29,10 +29,10 @@ public:
     virtual void update(float temp) override {
         m_temp.push_back(temp);
     }
-    virtual void print_status() override {
+    virtual void printStatus() override {
         std::cout << "INFO: " << m_name << " Current temp -> " << m_temp.back() << std::endl;
     }
-    virtual void print_statistic() override {
+    virtual void printStatistic() override {
         float sum = 0.0f;
         m_min = m_temp[0];
         m_max = m_temp[0];
@@ -60,26 +60,26 @@ public:
 
     ~TempStation() = default;
 
-    void set_temperature(float temp, size_t id) {
+    void setTemperature(float temp, size_t id) {
         for (int i = 0; i < m_stations.size(); i++) {
             if (m_stations[i].first == id) {
                 auto &selected = m_stations[i].second;
                 selected->update(temp);
-                selected->print_status();
-                selected->print_statistic();
+                selected->printStatus();
+                selected->printStatistic();
                 return;
             }
         }
     }
 
-    size_t register_observer(std::shared_ptr<Observer> observer) {
+    size_t registerObserver(std::shared_ptr<Observer> observer) {
         size_t old_counter = m_counter;
         m_stations.push_back(std::make_pair(m_counter, observer));
         m_counter++;
         return old_counter;
     }
 
-    void remove_observer(size_t id) {
+    void removeObserver(size_t id) {
         for (int i = 0; i < m_stations.size(); i++) {
             if (m_stations[i].first == id) {
                 m_stations.erase(m_stations.begin() + i);

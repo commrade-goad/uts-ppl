@@ -2,14 +2,14 @@
 
 int main(void) {
     TempStation ts = TempStation();
-    size_t dapur = ts.register_observer(std::make_shared<Display>("dapur"));
-    size_t km    = ts.register_observer(std::make_shared<Display>("kamar mandi"));
+    size_t dapur = ts.registerObserver(std::make_shared<Display>("dapur"));
+    size_t km    = ts.registerObserver(std::make_shared<Display>("kamar mandi"));
 
-    ts.set_temperature(20, dapur);
-    ts.set_temperature(25, km);
+    ts.setTemperature(20, dapur);
+    ts.setTemperature(25, km);
 
-    ts.remove_observer(km);
+    ts.removeObserver(km);
 
-    ts.set_temperature(25, dapur);
+    ts.setTemperature(25, dapur);
     return 0;
 }
